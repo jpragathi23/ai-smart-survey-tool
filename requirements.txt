@@ -1,0 +1,21 @@
+# ============ requirements.txt ============
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-dotenv
+openai
+
+# Optional (for deployment or frontend CORS)
+httpx
+python-multipart
+jinja2
+
+# If using PostgreSQL instead of SQLite
+psycopg2-binary
+
+# If using voice/translation later
+# speechrecognition
+gtts
+langdetect
+transformers
