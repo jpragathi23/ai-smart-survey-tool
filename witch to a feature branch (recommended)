@@ -1,0 +1,16 @@
+* [33m5834baa[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m main.py
+* [33m76aef87[m docker-compose.yml
+* [33m725c1af[m Dockerfile
+* [33mf5ebcd8[m requirements.txt
+* [33m6f013b9[m .env
+* [33mb0f73f7[m  validation_service.py
+* [33mccc0511[m  response_routes.py
+* [33mf61d9d7[m schemas.py
+* [33mefce159[m  database.py
+* [33m7c28628[m survey_models.py
+* [33mdb35d8a[m analytics_service.py
+* [33md6bb9d7[m  nss_service.py
+* [33m0ea21ef[m  llm_service.py
+* [33m1875dfc[m survey_routes.py
+* [33m023fe64[m main.py
+* [33m6a88ed4[m Initial commit

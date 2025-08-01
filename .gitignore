@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.sqlite3
+*.db
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Environment files (keep .env.example tracked, but not real secrets)
+.env
+*.env
+
+# Logs and coverage
+*.log
+htmlcov/
+.coverage
+.pytest_cache/
+.mypy_cache/
+
+# Distribution / packaging
+build/
+dist/
+
+# Editor/IDE
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Docker overrides / local compose
+docker-compose.override.yml
+
+# Codespaces
+.codespaces/
+
+# Misc sensitive
+secrets.json
