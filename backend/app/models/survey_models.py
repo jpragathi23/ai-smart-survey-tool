@@ -59,7 +59,7 @@ class Response(Base):
     answer = Column(JSON)
     confidence_score = Column(Integer, default=100)
     validation_status = Column(String(50), default="pending")
-    metadata = Column(JSON, default={})
+    extra_metadata = Column(JSON, default={})  # renamed from reserved 'metadata'
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     question = relationship("Question", back_populates="responses")

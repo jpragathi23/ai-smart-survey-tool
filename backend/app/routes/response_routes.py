@@ -34,7 +34,7 @@ def submit_response(payload: SubmitResponseRequest, db: Session = Depends(get_db
             answer=payload.answer,
             confidence_score=confidence,
             validation_status=validation_status,
-            metadata=payload.metadata
+            extra_metadata=payload.metadata
         )
         db.add(response)
         db.commit()
