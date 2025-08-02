@@ -1,12 +1,12 @@
 # backend/app/schemas.py
 
-from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
-from datetime import datetime
+from typing import List, Optional, Any
+from pydantic import BaseModel
 
-# -------------------------
-# Request: Create Survey
-# -------------------------
+
+# --------------------------
+# Survey Creation
+# --------------------------
 class SurveyCreateRequest(BaseModel):
     title: str
     description: Optional[str] = None
@@ -17,61 +17,75 @@ class SurveyCreateRequest(BaseModel):
     voice_enabled: bool = False
     status: Optional[str] = "draft"
 
-# -------------------------
-# Response: Survey
-# -------------------------
+    class Config:
+        from_attributes = True
+
+
 class QuestionSchema(BaseModel):
     id: int
     question_text: str
     question_type: str
-    options: Optional[List[str]] = []
-    translations: Optional[Dict[str, str]] = {}
-    order_index: Optional[int] = 0
-    is_mandatory: Optional[bool] = False
+    options: Optional[List[Any]] = []
+    order_index: int
+    is_mandatory: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
 
 class SurveyResponse(BaseModel):
     id: int
     title: str
     description: Optional[str]
     survey_type: str
-    nss_template_type: Optional[str]
     languages: List[str]
     adaptive_enabled: bool
     voice_enabled: bool
     status: str
-    created_at: datetime
     questions: List[QuestionSchema] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
-# -------------------------
-# Adaptive Question Output
-# -------------------------
+
+# --------------------------
+# Adaptive Question Response
+# --------------------------
 class AdaptiveQuestionResponse(BaseModel):
     question_id: int
     question_text: str
     question_type: str
-    options: Optional[List[str]] = []
-    order_index: Optional[int] = 0
-    is_mandatory: Optional[bool] = False
-    completed: Optional[bool] = False
+    options: List[Any] = []
+    order_index: int
+    completed: bool = False
 
-# -------------------------
-# Submit Response
-# -------------------------
+    class Config:
+        from_attributes = True
+
+
+# --------------------------
+# Submit Response (Request + Result)
+# --------------------------
 class SubmitResponseRequest(BaseModel):
     survey_id: int
     question_id: int
     respondent_id: str
-    answer: Any
-    metadata: Optional[Dict[str, Any]] = {}
+    answer: Any  # Can be text, choice id, list, dict, etc.
+    confidence_score: Optional[int] = 100
+    validation_status: Optional[str] = "pending"
+    extra_metadata: Optional[dict] = {}
+
+    class Config:
+        from_attributes = True
+
 
 class SubmitResponseResult(BaseModel):
-    status: str
+    response_id: int
+    survey_id: int
+    question_id: int
+    respondent_id: str
+    validation_status: str
     message: str
-    confidence_score: Optional[int] = None
-    validation_status: Optional[str] = None
+
+    class Config:
+        from_attributes = True

@@ -16,8 +16,10 @@ psycopg2-binary
 
 # If using voice/translation later
 # speechrecognition
+pyaudio
 gtts
 langdetect
 transformers
 alembic==1.12.1
-
+passlib[bcrypt]
+pydantic[email]

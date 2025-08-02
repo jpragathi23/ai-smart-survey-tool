@@ -1,51 +1,70 @@
 # backend/app/routes/response_routes.py
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+
 from app.database import get_db
+from app.models import Response
 from app.schemas import SubmitResponseRequest, SubmitResponseResult
-from app.models import survey_models
-from app.services import validation_service
 
-router = APIRouter()
+router = APIRouter(prefix="/responses", tags=["Responses"])
 
-# ---------------------------
-# Submit a Survey Response
-# ---------------------------
+
 @router.post("/submit", response_model=SubmitResponseResult)
 def submit_response(payload: SubmitResponseRequest, db: Session = Depends(get_db)):
     try:
-        # Fetch question for context
-        question = db.query(survey_models.Question).filter_by(id=payload.question_id).first()
-        if not question:
-            raise HTTPException(status_code=404, detail="Question not found")
-
-        # Validate answer (real-time validation)
-        validation_status, confidence = validation_service.validate_answer(
-            question=question,
-            answer=payload.answer
+        # Check if this respondent already answered this question
+        existing = (
+            db.query(Response)
+            .filter(
+                Response.survey_id == payload.survey_id,
+                Response.question_id == payload.question_id,
+                Response.respondent_id == payload.respondent_id,
+            )
+            .first()
         )
 
-        # Store response
-        response = survey_models.Response(
+        if existing:
+            # Update the existing answer
+            existing.answer = payload.answer
+            existing.confidence_score = payload.confidence_score
+            existing.validation_status = payload.validation_status
+            existing.extra_metadata = payload.extra_metadata or {}
+            db.commit()
+            db.refresh(existing)
+
+            return SubmitResponseResult(
+                response_id=existing.id,
+                survey_id=existing.survey_id,
+                question_id=existing.question_id,
+                respondent_id=existing.respondent_id,
+                validation_status=existing.validation_status,
+                message="Response updated successfully",
+            )
+
+        # Create a new response record
+        new_response = Response(
             survey_id=payload.survey_id,
             question_id=payload.question_id,
             respondent_id=payload.respondent_id,
             answer=payload.answer,
-            confidence_score=confidence,
-            validation_status=validation_status,
-            extra_metadata=payload.metadata
+            confidence_score=payload.confidence_score,
+            validation_status=payload.validation_status,
+            extra_metadata=payload.extra_metadata or {},
         )
-        db.add(response)
+        db.add(new_response)
         db.commit()
+        db.refresh(new_response)
 
         return SubmitResponseResult(
-            status="success",
-            message="Response saved",
-            confidence_score=confidence,
-            validation_status=validation_status
+            response_id=new_response.id,
+            survey_id=new_response.survey_id,
+            question_id=new_response.question_id,
+            respondent_id=new_response.respondent_id,
+            validation_status=new_response.validation_status,
+            message="Response submitted successfully",
         )
 
     except Exception as e:
         db.rollback()
-        raise HTTPException(status_code=500, detail=f"Response submission failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error submitting response: {str(e)}")
