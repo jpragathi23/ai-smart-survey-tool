@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Enum
-from ..database import Base  # relative import
+from ..database import Base
 import enum
 
 class UserRole(str, enum.Enum):
@@ -15,4 +15,3 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
     role = Column(Enum(UserRole), default=UserRole.participant)
-

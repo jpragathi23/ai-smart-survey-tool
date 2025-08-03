@@ -1,14 +1,7 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    Text,
-    ForeignKey,
-    JSON,
-    Boolean,
-)
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, JSON, Boolean
 from sqlalchemy.orm import relationship
-from ..database import Base  # relative import
+
+from ..database import Base
 
 class Question(Base):
     __tablename__ = "questions"
@@ -27,8 +20,5 @@ class Question(Base):
 
     survey = relationship("Survey", back_populates="questions")
     responses = relationship(
-        "Response",
-        back_populates="question",
-        cascade="all, delete-orphan",
-        passive_deletes=True
+        "Response", back_populates="question", cascade="all, delete-orphan", passive_deletes=True
     )

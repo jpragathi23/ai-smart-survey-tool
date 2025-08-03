@@ -1,14 +1,8 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    ForeignKey,
-    JSON,
-    DateTime,
-)
+from sqlalchemy import Column, Integer, String, ForeignKey, JSON, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from ..database import Base  # relative import
+
+from ..database import Base
 
 class Response(Base):
     __tablename__ = "responses"
@@ -21,7 +15,7 @@ class Response(Base):
     answer = Column(JSON)
     confidence_score = Column(Integer, default=100)
     validation_status = Column(String(50), default="pending")
-    extra_metadata = Column(JSON, default=lambda: {})  # safer default
+    extra_metadata = Column(JSON, default=lambda: {})
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     question = relationship("Question", back_populates="responses")

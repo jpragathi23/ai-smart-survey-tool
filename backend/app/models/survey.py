@@ -1,18 +1,9 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    Boolean,
-    ForeignKey,
-    Text,
-    DateTime,
-    JSON,
-)
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Text, DateTime, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
-from ..database import Base  # relative import
-from .question import Question  # relative import
+from ..database import Base
+from .question import Question
 
 class Survey(Base):
     __tablename__ = "surveys"
@@ -20,9 +11,9 @@ class Survey(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
     description = Column(Text)
-    survey_type = Column(String(50))  # custom, nss, ai_generated
+    survey_type = Column(String(50))
     nss_template_type = Column(String(50), nullable=True)
-    languages = Column(JSON, default=lambda: ["en"])  # safer default
+    languages = Column(JSON, default=lambda: ["en"])
     adaptive_enabled = Column(Boolean, default=True)
     voice_enabled = Column(Boolean, default=False)
     status = Column(String(50), default="draft")
