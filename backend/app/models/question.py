@@ -17,11 +17,11 @@ class Question(Base):
     survey_id = Column(Integer, ForeignKey("surveys.id", ondelete="CASCADE"))
     question_text = Column(Text, nullable=False)
     question_type = Column(String(50), default="text")  # text, radio, checkbox
-    options = Column(JSON, default=[])
-    validation_rules = Column(JSON, default={})
+    options = Column(JSON, default=lambda: [])
+    validation_rules = Column(JSON, default=lambda: {})
     order_index = Column(Integer, default=0)
     is_mandatory = Column(Boolean, default=False)
-    translations = Column(JSON, default={})
+    translations = Column(JSON, default=lambda: {})
     nss_code = Column(String(50), nullable=True)
     lgd_location_type = Column(String(50), nullable=True)
 

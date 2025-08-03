@@ -1,16 +1,16 @@
-"""split models and add question/response
+"""create all tables
 
-Revision ID: 04d8dad75204
-Revises: edf12d09bae5
-Create Date: 2025-08-02 11:59:06.103308
+Revision ID: 22e1e4726aaa
+Revises: f0e025bd8318
+Create Date: 2025-08-03 05:33:15.787906
 
 """
 from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision = '04d8dad75204'
-down_revision = 'edf12d09bae5'
+revision = '22e1e4726aaa'
+down_revision = 'f0e025bd8318'
 branch_labels = None
 depends_on = None
 

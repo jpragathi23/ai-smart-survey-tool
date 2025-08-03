@@ -12,7 +12,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from app.database import Base
-
+from app.models.question import Question  # Import Question model
 
 class Survey(Base):
     __tablename__ = "surveys"
@@ -32,7 +32,7 @@ class Survey(Base):
     created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
     creator = relationship("User", foreign_keys=[created_by])
 
-    # Questions in this survey
+    # Relationship to questions
     questions = relationship(
         "Question",
         back_populates="survey",
