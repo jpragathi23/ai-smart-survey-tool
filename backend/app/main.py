@@ -3,7 +3,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import survey_routes, voice_routes, analytics_routes, response_routes
+# ✅ Use relative imports so they work anywhere
+from .routes import survey_routes, voice_routes, analytics_routes, response_routes
+from .database import Base, engine
+from .models import survey, question, response  # ✅ import all models
 
 app = FastAPI(title="AI Smart Survey Tool")
 
@@ -26,9 +29,8 @@ app.include_router(survey_routes.router, prefix="/api/surveys", tags=["Surveys"]
 app.include_router(voice_routes.router, prefix="/api/voice", tags=["Voice"])
 app.include_router(analytics_routes.router, prefix="/api/analytics", tags=["Analytics"])
 app.include_router(response_routes.router, prefix="/api/responses", tags=["Responses"])
-from app.database import Base, engine
-from app.models import survey, question, response  # ✅ import all models
 
+# Create tables
 print("📌 Creating all tables...")
 Base.metadata.create_all(bind=engine)
 print("✅ Tables created successfully!")

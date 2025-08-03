@@ -5,7 +5,9 @@ from sqlalchemy.orm import Session
 from typing import Optional
 
 from app.database import get_db
-from app.models.survey import Survey, Question, Response  # direct class imports
+from app.models.survey import Survey
+from app.models.question import Question
+from app.models.response import Response  # direct class imports
 from app.schemas import SurveyCreateRequest, SurveyResponse, AdaptiveQuestionResponse
 from app.services import nss_service, llm_service, analytics_service
 

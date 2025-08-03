@@ -11,8 +11,8 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
-from app.database import Base
-from app.models.question import Question  # Import Question model
+from ..database import Base  # relative import
+from .question import Question  # relative import
 
 class Survey(Base):
     __tablename__ = "surveys"
@@ -22,17 +22,15 @@ class Survey(Base):
     description = Column(Text)
     survey_type = Column(String(50))  # custom, nss, ai_generated
     nss_template_type = Column(String(50), nullable=True)
-    languages = Column(JSON, default=["en"])
+    languages = Column(JSON, default=lambda: ["en"])  # safer default
     adaptive_enabled = Column(Boolean, default=True)
     voice_enabled = Column(Boolean, default=False)
     status = Column(String(50), default="draft")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    # Link to creator (User)
     created_by = Column(Integer, ForeignKey("users.id"), nullable=True)
     creator = relationship("User", foreign_keys=[created_by])
 
-    # Relationship to questions
     questions = relationship(
         "Question",
         back_populates="survey",

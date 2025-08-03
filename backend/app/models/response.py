@@ -8,7 +8,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.database import Base
+from ..database import Base  # relative import
 
 class Response(Base):
     __tablename__ = "responses"
@@ -21,7 +21,7 @@ class Response(Base):
     answer = Column(JSON)
     confidence_score = Column(Integer, default=100)
     validation_status = Column(String(50), default="pending")
-    extra_metadata = Column(JSON, default=lambda: {})  # use lambda for default dict
+    extra_metadata = Column(JSON, default=lambda: {})  # safer default
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     question = relationship("Question", back_populates="responses")
