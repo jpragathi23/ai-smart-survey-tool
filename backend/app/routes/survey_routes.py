@@ -1,15 +1,13 @@
-# backend/app/routes/survey_routes.py
-
 from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
 from typing import Optional
 
-from app.database import get_db
-from app.models.survey import Survey
-from app.models.question import Question
-from app.models.response import Response  # direct class imports
-from app.schemas import SurveyCreateRequest, SurveyResponse, AdaptiveQuestionResponse
-from app.services import nss_service, llm_service, analytics_service
+from ..database import get_db
+from ..models.survey import Survey
+from ..models.question import Question
+from ..models.response import Response
+from ..schemas import SurveyCreateRequest, SurveyResponse, AdaptiveQuestionResponse
+from ..services import nss_service, llm_service, analytics_service
 
 router = APIRouter()
 

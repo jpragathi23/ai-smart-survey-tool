@@ -23,3 +23,4 @@ transformers
 alembic==1.12.1
 passlib[bcrypt]
 pydantic[email]
+python-dotenv
