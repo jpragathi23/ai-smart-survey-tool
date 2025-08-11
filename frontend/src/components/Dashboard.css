@@ -1,0 +1,14 @@
+.dashboard h2 {
+  color: #1f2937; /* Tailwind's gray-800 */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard .card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border-radius: 1rem;
+}
+
+.dashboard .card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
