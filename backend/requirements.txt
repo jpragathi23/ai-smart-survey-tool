@@ -1,6 +1,6 @@
 # ============ requirements.txt ============
 fastapi
-uvicorn
+uvicorn[standard]
 sqlalchemy
 pydantic
 python-dotenv

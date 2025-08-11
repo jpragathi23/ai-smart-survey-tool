@@ -47,3 +47,4 @@ docker-compose.override.yml
 # Misc sensitive
 secrets.json
 frontend/tailwindcss
+path/to/tailwind.css
