@@ -4,7 +4,8 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Copy requirements first
-COPY requirements.txt .
+COPY backend/requirements.txt ./requirements.txt
+
 
 # Install system dependencies before Python packages
 RUN apt-get update && apt-get install -y \
